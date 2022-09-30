@@ -1,4 +1,3 @@
-import 'package:finan_reports/components/report_card.dart';
 import 'package:finan_reports/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
+        scaffoldBackgroundColor: Color.fromARGB(255, 235, 235, 235)
       ),
       home: const HomePage(),
     );

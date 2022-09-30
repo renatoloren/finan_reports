@@ -1,5 +1,7 @@
 import 'package:finan_reports/models/report.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 
 class ReportCard extends StatelessWidget {
   // final Report report;
@@ -15,11 +17,14 @@ class ReportCard extends StatelessWidget {
     return SizedBox(
       child: Container(
           width: 350,
-          padding: const EdgeInsets.all(25),
+          margin:
+              const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 0),
+          padding:
+              const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 20),
           decoration: BoxDecoration(
+              color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                  color: const Color.fromARGB(255, 0, 0, 0), width: 2)),
+              ),
           child: Align(
             alignment: Alignment.topLeft,
             child: Column(
@@ -35,15 +40,17 @@ class ReportCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(report.date.toString(),
+                    Text(DateFormat('MM/dd/yyyy').format(report.date),
                         style:
                             const TextStyle(fontSize: 16, color: Colors.grey)),
                     const SizedBox(width: 30),
                     Text(report.performance.toString(),
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: Colors.green))
+                            color: report.performance == 'Bom'?
+                                     Colors.green : report.performance == 'Médio'? 
+                                      Colors.orangeAccent : Colors.red))
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -55,7 +62,7 @@ class ReportCard extends StatelessWidget {
                             fontSize: 16,
                             color: Colors.grey)),
                     const SizedBox(width: 10),
-                    Text(report.taxSelic.toString(),
+                    Text("${report.taxSelic}%",
                         style: const TextStyle(fontSize: 16)),
                     const Spacer(),
                     const Text('financiamento',
@@ -64,11 +71,12 @@ class ReportCard extends StatelessWidget {
                             fontSize: 16,
                             color: Colors.grey)),
                     const SizedBox(width: 10),
-                    Text(report.taxFinan.toString(),
+                    Text("${report.taxFinan}%",
                         style: const TextStyle(fontSize: 16)),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
+                const Divider(height: 30, color: Color.fromARGB(255, 194, 194, 194),),
                 Text(report.description.toString())
               ],
             ),
