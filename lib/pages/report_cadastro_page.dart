@@ -15,53 +15,51 @@ class ReportCadastroPage extends StatefulWidget {
   State<ReportCadastroPage> createState() => _ReportCadastroPageState();
 }
 
-
 class _ReportCadastroPageState extends State<ReportCadastroPage> {
-
   ReportRepository _reportRepository = ReportRepository();
   final _titleController = TextEditingController();
-  final _dateController = TextEditingController(); 
-  final _taxSelicController = MoneyMaskedTextController(
-      decimalSeparator: ','); //ver input de number
-  final _taxFinanController = MoneyMaskedTextController(
-      decimalSeparator: ','); //ver input de number
+  final _dateController = TextEditingController();
+  final _taxSelicController =
+      MoneyMaskedTextController(decimalSeparator: ','); //ver input de number
+  final _taxFinanController =
+      MoneyMaskedTextController(decimalSeparator: ','); //ver input de number
   final _performanceController = TextEditingController();
   final _descriptionController = TextEditingController();
 
- List<String> listPerformance = <String>['Bom', 'Médio', 'Mal'];
+  List<String> listPerformance = <String>['Bom', 'Médio', 'Mal'];
   String dropdownValue = 'Bom';
 
   @override
-    void initState() {
-      super.initState();
+  void initState() {
+    super.initState();
 
-      
     final report = widget.reportParaEdicao;
-      if(report != null) {
+    if (report != null) {
       _titleController.text = report.title;
       //_dateController.text = DateFormat('MM/dd/yyyy').format(report.date);
       _taxSelicController.text = report.taxSelic!.toDouble() as String;
       _taxFinanController.text = report.taxFinan!.toDouble() as String;
       _performanceController.text = report.performance;
       _descriptionController.text = report.description!;
-  }
+    }
   }
 
-    final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de Report'),
+        title: const Text('Cadastro de Relatório'),
       ),
-            body: SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                const SizedBox(height: 20),
                 _buildTitle(),
                 const SizedBox(height: 20),
                 _buildDate(),
@@ -74,9 +72,7 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
                 const SizedBox(height: 20),
                 _buildDescription(),
                 const SizedBox(height: 20),
-                // const SizedBox(height: 20),
                 _buildButton(),
-                // const SizedBox(height: 20),
               ],
             ),
           ),
@@ -85,14 +81,19 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
     );
   }
 
-    TextFormField _buildTitle() {
+  TextFormField _buildTitle() {
     return TextFormField(
       controller: _titleController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: 'Informe o Título',
-        labelText: 'Nome do report',
-        border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.ac_unit),
+        labelText: 'Título do Relatório',
+        filled: true,
+        fillColor: Color.fromARGB(255, 218, 218, 218),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        prefixIcon: Icon(Icons.auto_graph),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -106,13 +107,18 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
     );
   }
 
-      TextFormField _buildTaxSelic() {
+  TextFormField _buildTaxSelic() {
     return TextFormField(
       controller: _taxSelicController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: 'Informe o valor da taxa selic',
         labelText: 'Valor taxa selic',
-        border: OutlineInputBorder(),
+        filled: true,
+        fillColor: Color.fromARGB(255, 218, 218, 218),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
         prefixIcon: Icon(Icons.percent),
       ),
       validator: (value) {
@@ -125,13 +131,18 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
     );
   }
 
-        TextFormField _buildTaxFinan() {
+  TextFormField _buildTaxFinan() {
     return TextFormField(
       controller: _taxFinanController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: 'Informe o valor da taxa de financiamento',
         labelText: 'Valor taxa financiamento',
-        border: OutlineInputBorder(),
+        filled: true,
+        fillColor: Color.fromARGB(255, 218, 218, 218),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
         prefixIcon: Icon(Icons.percent),
       ),
       validator: (value) {
@@ -144,8 +155,7 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
     );
   }
 
-    DropdownButtonFormField _buildPerformance() {
-     
+  DropdownButtonFormField _buildPerformance() {
     return DropdownButtonFormField<String>(
       value: dropdownValue,
       items: listPerformance.map<DropdownMenuItem<String>>((String value) {
@@ -156,13 +166,18 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
       }).toList(),
       onChanged: (String? value) {
         setState(() {
-         dropdownValue = value!;
+          dropdownValue = value!;
         });
       },
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: 'Selecione o desempenho',
         labelText: 'Desempenho',
-        border: OutlineInputBorder(),
+        filled: true,
+        fillColor: Color.fromARGB(255, 218, 218, 218),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
         prefixIcon: Icon(Icons.dashboard),
       ),
       validator: (value) {
@@ -174,21 +189,25 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
     );
   }
 
-    TextFormField _buildDescription() {
+  TextFormField _buildDescription() {
     return TextFormField(
       controller: _descriptionController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: 'Escreve uma descrição',
         labelText: 'Descrição',
-        border: OutlineInputBorder(),
+        filled: true,
+        fillColor: Color.fromARGB(255, 218, 218, 218),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
       ),
       keyboardType: TextInputType.multiline,
       maxLines: 2,
     );
   }
 
-
-    SizedBox _buildButton() {
+  SizedBox _buildButton() {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -199,10 +218,13 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
         onPressed: () async {
           final isValid = _formKey.currentState!.validate();
           if (isValid) {
-
-             final title = _titleController.text;
-            final taxSelic = double.parse(_taxSelicController.text.replaceAll('.', '').replaceAll(',', '.'));
-            final taxFinan = double.parse(_taxFinanController.text.replaceAll('.', '').replaceAll(',', '.'));
+            final title = _titleController.text;
+            final taxSelic = double.parse(_taxSelicController.text
+                .replaceAll('.', '')
+                .replaceAll(',', '.'));
+            final taxFinan = double.parse(_taxFinanController.text
+                .replaceAll('.', '')
+                .replaceAll(',', '.'));
             final performance = dropdownValue;
             final description = _descriptionController.text;
             final date = DateFormat('dd/MM/yyyy').parse(_dateController.text);
@@ -222,7 +244,7 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
               //   report.id = widget.reportParaEdicao!.id;
               //   await _reportRepository.editarReport(report);
               // } else {
-                await _reportRepository.registryReport(report);
+              await _reportRepository.registryReport(report);
               // }
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -238,13 +260,18 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
     );
   }
 
-TextFormField _buildDate() {
+  TextFormField _buildDate() {
     return TextFormField(
       controller: _dateController,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         hintText: 'Informe uma Data',
         labelText: 'Data',
-        border: OutlineInputBorder(),
+        filled: true,
+        fillColor: Color.fromARGB(255, 218, 218, 218),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
         prefixIcon: Icon(Icons.calendar_month),
       ),
       onTap: () async {

@@ -41,8 +41,9 @@ class _HomePageState extends State<HomePage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             final reports = snapshot.data ?? [];
-            return ListView.builder(
+            return ListView.separated(
               itemCount: reports.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 20),
               itemBuilder: (context, index) {
                 final report = reports[index];
                 return ReportCard(report: report);
