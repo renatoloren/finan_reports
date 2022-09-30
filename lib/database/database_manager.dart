@@ -14,7 +14,7 @@ class DatabaseManager {
       'date': '2022-09-30 00:00:00',
       'taxSelic': 10.55,
       'taxFinan': 02.77,
-      'performance': 2,
+      'performance': 'bom desempenho',
       'description': 'testtee'
     });
   }
@@ -26,7 +26,7 @@ class DatabaseManager {
       date TEXT,
       taxSelic REAL,
       taxFinan REAL,
-      performance INTEGER,
+      performance TEXT,
       description TEXT
     );
   ''';

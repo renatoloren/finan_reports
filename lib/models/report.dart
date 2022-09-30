@@ -4,7 +4,7 @@ class Report {
   DateTime date;
   double? taxSelic;
   double? taxFinan;
-  int performance;
+  String performance;
   String? description;
 
   Report(
