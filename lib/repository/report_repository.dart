@@ -7,14 +7,13 @@ class ReportRepository {
     final List<Map<String, dynamic>> rows = await db.rawQuery('''
     SELECT * FROM reports
 ''');
-    print(rows);
     return rows
         .map((r) => Report(
             id: r['id'],
             title: r['title'],
             date: r['date'],
-            taxFinan: r['t_finan'],
-            taxSelic: r['t_selic'],
+            taxFinan: r['taxFinan'],
+            taxSelic: r['taxSelic'],
             performance: r['performance'],
             description: r['description']))
         .toList();
@@ -26,8 +25,8 @@ class ReportRepository {
     db.insert("reports", {
       "title": report.title,
       "date": report.date,
-      "t_selic": report.taxSelic,
-      "t_finan": report.taxFinan,
+      "taxSelic": report.taxSelic,
+      "taxFinan": report.taxFinan,
       "performance": report.performance,
       "description": report.description
     });

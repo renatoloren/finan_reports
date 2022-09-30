@@ -12,7 +12,6 @@ class ReportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var perc = '12.90';
     return SizedBox(
       child: Container(
           width: 350,
@@ -56,7 +55,8 @@ class ReportCard extends StatelessWidget {
                             fontSize: 16,
                             color: Colors.grey)),
                     const SizedBox(width: 10),
-                    Text('$perc%', style: const TextStyle(fontSize: 16)),
+                    Text(report.taxSelic.toString(),
+                        style: const TextStyle(fontSize: 16)),
                     const Spacer(),
                     const Text('financiamento',
                         style: TextStyle(
@@ -64,12 +64,12 @@ class ReportCard extends StatelessWidget {
                             fontSize: 16,
                             color: Colors.grey)),
                     const SizedBox(width: 10),
-                    Text('$perc%', style: const TextStyle(fontSize: 16)),
+                    Text(report.taxFinan.toString(),
+                        style: const TextStyle(fontSize: 16)),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Text(
-                    'teaasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf')
+                Text(report.description.toString())
               ],
             ),
           )),

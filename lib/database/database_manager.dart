@@ -9,11 +9,11 @@ class DatabaseManager {
 
   _onCreate(Database db, int version) async {
     await db.execute(_reports);
-    await db.insert('sa', {
+    await db.insert('reports', {
       'title': 1,
       'date': '2022-09-30 00:00:00',
-      't_selic': 10.55,
-      't_finan': 02.77,
+      'taxSelic': 10.55,
+      'taxFinan': 02.77,
       'performance': 2,
       'description': 'testtee'
     });
@@ -24,8 +24,8 @@ class DatabaseManager {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT,
       date TEXT,
-      t_selic REAL,
-      t_finan REAL,
+      taxSelic REAL,
+      taxFinan REAL,
       performance INTEGER,
       description TEXT
     );
