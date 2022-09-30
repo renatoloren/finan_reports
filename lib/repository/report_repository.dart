@@ -5,13 +5,21 @@ class ReportRepository {
   Future<List<Report>> listReports() async {
     final db = await DatabaseManager().getDatabase();
     final List<Map<String, dynamic>> rows = await db.rawQuery('''
-    SELECT * FROM reports
+    SELECT 
+      reports.id, 
+      reports.title,
+      reports.date,
+      reports.taxFinan, 
+      reports.taxSelic, 
+      reports.performance,
+      reports.description
+    FROM reports
 ''');
     return rows
         .map((r) => Report(
             id: r['id'],
             title: r['title'],
-            date: r['date'],
+            date:  DateTime.fromMillisecondsSinceEpoch(r['date']),
             taxFinan: r['taxFinan'],
             taxSelic: r['taxSelic'],
             performance: r['performance'],
@@ -24,7 +32,7 @@ class ReportRepository {
 
     db.insert("reports", {
       "title": report.title,
-      "date": report.date,
+      "date": report.date.millisecondsSinceEpoch,
       "taxSelic": report.taxSelic,
       "taxFinan": report.taxFinan,
       "performance": report.performance,

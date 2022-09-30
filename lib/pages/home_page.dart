@@ -1,5 +1,6 @@
 import 'package:finan_reports/components/report_card.dart';
 import 'package:finan_reports/models/report.dart';
+import 'package:finan_reports/pages/report_cadastro_page.dart';
 import 'package:finan_reports/repository/report_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +53,18 @@ class _HomePageState extends State<HomePage> {
         }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (() => loadReports()),
+        onPressed:() async{
+          bool? reportCadastrado = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ReportCadastroPage()),
+        );
+            if (reportCadastrado != null && reportCadastrado) {
+              setState(() {
+                loadReports();
+              });
+            }
+
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
