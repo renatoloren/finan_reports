@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('teste'),
+        title: const Text('Relatórios de Desempenhos'),
       ),
       body: FutureBuilder<List<Report>>(
         future: _futureReports,
@@ -54,17 +54,16 @@ class _HomePageState extends State<HomePage> {
         }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:() async{
+        onPressed: () async {
           bool? reportCadastrado = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => ReportCadastroPage()),
-        );
-            if (reportCadastrado != null && reportCadastrado) {
-              setState(() {
-                loadReports();
-              });
-            }
-
+          );
+          if (reportCadastrado != null && reportCadastrado) {
+            setState(() {
+              loadReports();
+            });
+          }
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

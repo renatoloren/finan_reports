@@ -36,7 +36,6 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
     final report = widget.reportParaEdicao;
     if (report != null) {
       _titleController.text = report.title;
-      //_dateController.text = DateFormat('MM/dd/yyyy').format(report.date);
       _taxSelicController.text = report.taxSelic!.toDouble() as String;
       _taxFinanController.text = report.taxFinan!.toDouble() as String;
       _performanceController.text = report.performance;
@@ -52,28 +51,31 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
       appBar: AppBar(
         title: const Text('Cadastro de Relatório'),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                _buildTitle(),
-                const SizedBox(height: 20),
-                _buildDate(),
-                const SizedBox(height: 20),
-                _buildTaxSelic(),
-                const SizedBox(height: 20),
-                _buildTaxFinan(),
-                const SizedBox(height: 20),
-                _buildPerformance(),
-                const SizedBox(height: 20),
-                _buildDescription(),
-                const SizedBox(height: 20),
-                _buildButton(),
-              ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  _buildTitle(),
+                  const SizedBox(height: 20),
+                  _buildDate(),
+                  const SizedBox(height: 20),
+                  _buildTaxSelic(),
+                  const SizedBox(height: 20),
+                  _buildTaxFinan(),
+                  const SizedBox(height: 20),
+                  _buildPerformance(),
+                  const SizedBox(height: 20),
+                  _buildDescription(),
+                  const SizedBox(height: 20),
+                  _buildButton(),
+                ],
+              ),
             ),
           ),
         ),
@@ -88,12 +90,12 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
         hintText: 'Informe o Título',
         labelText: 'Título do Relatório',
         filled: true,
-        fillColor: Color.fromARGB(255, 218, 218, 218),
+        fillColor: const Color.fromARGB(255, 218, 218, 218),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),
-        prefixIcon: Icon(Icons.auto_graph),
+        prefixIcon: const Icon(Icons.auto_graph),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -114,12 +116,12 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
         hintText: 'Informe o valor da taxa selic',
         labelText: 'Valor taxa selic',
         filled: true,
-        fillColor: Color.fromARGB(255, 218, 218, 218),
+        fillColor: const Color.fromARGB(255, 218, 218, 218),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),
-        prefixIcon: Icon(Icons.percent),
+        prefixIcon: const Icon(Icons.percent),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -138,12 +140,12 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
         hintText: 'Informe o valor da taxa de financiamento',
         labelText: 'Valor taxa financiamento',
         filled: true,
-        fillColor: Color.fromARGB(255, 218, 218, 218),
+        fillColor: const Color.fromARGB(255, 218, 218, 218),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),
-        prefixIcon: Icon(Icons.percent),
+        prefixIcon: const Icon(Icons.percent),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -173,12 +175,12 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
         hintText: 'Selecione o desempenho',
         labelText: 'Desempenho',
         filled: true,
-        fillColor: Color.fromARGB(255, 218, 218, 218),
+        fillColor: const Color.fromARGB(255, 218, 218, 218),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),
-        prefixIcon: Icon(Icons.dashboard),
+        prefixIcon: const Icon(Icons.dashboard),
       ),
       validator: (value) {
         if (value == null) {
@@ -196,7 +198,7 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
         hintText: 'Escreve uma descrição',
         labelText: 'Descrição',
         filled: true,
-        fillColor: Color.fromARGB(255, 218, 218, 218),
+        fillColor: const Color.fromARGB(255, 218, 218, 218),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
@@ -231,7 +233,6 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
 
             final report = Report(
               title: title,
-              // date: DateTime.now().toString(),
               date: date,
               taxSelic: taxSelic,
               taxFinan: taxFinan,
@@ -240,14 +241,9 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
             );
 
             try {
-              // if (widget.reportParaEdicao != null) {
-              //   report.id = widget.reportParaEdicao!.id;
-              //   await _reportRepository.editarReport(report);
-              // } else {
               await _reportRepository.registryReport(report);
-              // }
 
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text('Report cadastrado com sucesso'),
               ));
               Navigator.of(context).pop(true);
@@ -267,12 +263,12 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
         hintText: 'Informe uma Data',
         labelText: 'Data',
         filled: true,
-        fillColor: Color.fromARGB(255, 218, 218, 218),
+        fillColor: const Color.fromARGB(255, 218, 218, 218),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
         ),
-        prefixIcon: Icon(Icons.calendar_month),
+        prefixIcon: const Icon(Icons.calendar_month),
       ),
       onTap: () async {
         FocusScope.of(context).requestFocus(FocusNode());

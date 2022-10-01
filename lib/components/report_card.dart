@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 
 class ReportCard extends StatelessWidget {
-  // final Report report;
   final Report report;
 
   const ReportCard({
@@ -18,13 +17,13 @@ class ReportCard extends StatelessWidget {
       child: Container(
           width: 350,
           margin:
-              const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 0),
+              const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
           padding:
               const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 20),
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              ),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: Align(
             alignment: Alignment.topLeft,
             child: Column(
@@ -35,7 +34,17 @@ class ReportCard extends StatelessWidget {
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
-                        ))
+                        )),
+                    const Spacer(),
+                    Text('${report.performance} desempenho',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: report.performance == 'Bom'
+                                ? Colors.green
+                                : report.performance == 'Médio'
+                                    ? Colors.orangeAccent
+                                    : Colors.red))
                   ],
                 ),
                 Row(
@@ -44,13 +53,6 @@ class ReportCard extends StatelessWidget {
                         style:
                             const TextStyle(fontSize: 16, color: Colors.grey)),
                     const SizedBox(width: 30),
-                    Text(report.performance.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: report.performance == 'Bom'?
-                                     Colors.green : report.performance == 'Médio'? 
-                                      Colors.orangeAccent : Colors.red))
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -64,7 +66,7 @@ class ReportCard extends StatelessWidget {
                     const SizedBox(width: 10),
                     Text("${report.taxSelic}%",
                         style: const TextStyle(fontSize: 16)),
-                    const Spacer(),
+                    const SizedBox(width: 30),
                     const Text('financiamento',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -76,8 +78,14 @@ class ReportCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Divider(height: 30, color: Color.fromARGB(255, 194, 194, 194),),
-                Text(report.description.toString())
+                const Divider(
+                    height: 30,
+                    color: Color.fromARGB(255, 194, 194, 194),
+                    thickness: 2),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(report.description.toString()),
+                )
               ],
             ),
           )),
