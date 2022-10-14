@@ -179,12 +179,18 @@ Future<Indicator> fetchData(url) async {
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
+    try{
     final List parsedList = await jsonDecode(response.body);
     return Indicator(
         value: double.parse(parsedList.elementAt(1)['valor']),
         change: double.parse(parsedList.elementAt(1)['valor']) -
             double.parse(parsedList.elementAt(0)['valor']));
+    }catch(e){ 
+     return fetchData(url);
+    }
+
   } else {
+    fetchData(url);
     throw Exception('Failed to load finan');
   }
 }
