@@ -1,7 +1,7 @@
-import 'package:finan_reports/components/report_card.dart';
-import 'package:finan_reports/models/report.dart';
+import 'package:finan_reports/pages/dashboard_page.dart';
+import 'package:finan_reports/pages/reports_list_page.dart';
 import 'package:finan_reports/pages/report_cadastro_page.dart';
-import 'package:finan_reports/repository/report_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,62 +12,58 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _reportRepository = ReportRepository();
-  late Future<List<Report>> _futureReports;
+  int paginaAtual = 0;
+  late PageController pc;
 
   @override
   void initState() {
-    loadReports();
     super.initState();
-  }
-
-  void loadReports() {
-    _futureReports = _reportRepository.listReports();
+    pc = PageController(initialPage: paginaAtual);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Relatórios de Desempenhos'),
+      body: PageView(
+        controller: pc,
+        onPageChanged: setPaginaAtual,
+        children: const [
+          DashboardPage(),
+          ReportsListPage(),
+        ],
       ),
-      body: FutureBuilder<List<Report>>(
-        future: _futureReports,
-        builder: ((context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            final reports = snapshot.data ?? [];
-            return ListView.separated(
-              itemCount: reports.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 20),
-              itemBuilder: (context, index) {
-                final report = reports[index];
-                return ReportCard(report: report);
-              },
-            );
-          }
-          return Container();
-        }),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          bool? reportCadastrado = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ReportCadastroPage()),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: paginaAtual,
+        backgroundColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.pie_chart,
+            ),
+            label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Relatórios',
+          ),
+        ],
+        fixedColor: const Color.fromRGBO(60, 255, 178, 1),
+        unselectedItemColor: Colors.white,
+        onTap: (pagina) {
+          pc.animateToPage(
+            pagina,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.ease,
           );
-          if (reportCadastrado != null && reportCadastrado) {
-            setState(() {
-              loadReports();
-            });
-          }
         },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
+  }
+
+  setPaginaAtual(pagina) {
+    setState(() {
+      paginaAtual = pagina;
+    });
   }
 }

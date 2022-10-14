@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:finan_reports/components/report_card.dart';
 import 'package:finan_reports/models/report.dart';
 import 'package:finan_reports/repository/report_repository.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +13,7 @@ class ReportCadastroPage extends StatefulWidget {
 }
 
 class _ReportCadastroPageState extends State<ReportCadastroPage> {
-  ReportRepository _reportRepository = ReportRepository();
+  final ReportRepository _reportRepository = ReportRepository();
   final _titleController = TextEditingController();
   final _dateController = TextEditingController();
   final _taxSelicController =
@@ -36,10 +33,11 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
     final report = widget.reportParaEdicao;
     if (report != null) {
       _titleController.text = report.title;
-      _taxSelicController.text = report.taxSelic!.toDouble() as String;
-      _taxFinanController.text = report.taxFinan!.toDouble() as String;
+      _taxSelicController.text = report.taxSelic!.toString();
+      _taxFinanController.text = report.taxFinan!.toString();
       _performanceController.text = report.performance;
       _descriptionController.text = report.description!;
+      _dateController.text = DateFormat('MM/dd/yyyy').format(report.date);
     }
   }
 
@@ -48,7 +46,9 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(17, 18, 18, 1),
       appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(17, 18, 18, 1),
         title: const Text('Cadastro de Relatório'),
       ),
       body: Padding(
@@ -86,16 +86,22 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
   TextFormField _buildTitle() {
     return TextFormField(
       controller: _titleController,
+      style: const TextStyle(color: Colors.white60),
       decoration: InputDecoration(
         hintText: 'Informe o Título',
         labelText: 'Título do Relatório',
-        filled: true,
-        fillColor: const Color.fromARGB(255, 218, 218, 218),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+        filled: false,
+        labelStyle: const TextStyle(color: Colors.white),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        prefixIcon: const Icon(
+          Icons.auto_graph,
+          color: Colors.white,
         ),
-        prefixIcon: const Icon(Icons.auto_graph),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -112,16 +118,21 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
   TextFormField _buildTaxSelic() {
     return TextFormField(
       controller: _taxSelicController,
+      style: const TextStyle(color: Colors.white60),
       decoration: InputDecoration(
         hintText: 'Informe o valor da taxa selic',
         labelText: 'Valor taxa selic',
-        filled: true,
-        fillColor: const Color.fromARGB(255, 218, 218, 218),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+        labelStyle: const TextStyle(color: Colors.white),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        prefixIcon: const Icon(
+          Icons.percent,
+          color: Colors.white,
         ),
-        prefixIcon: const Icon(Icons.percent),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -136,16 +147,21 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
   TextFormField _buildTaxFinan() {
     return TextFormField(
       controller: _taxFinanController,
+      style: const TextStyle(color: Colors.white60),
       decoration: InputDecoration(
         hintText: 'Informe o valor da taxa de financiamento',
         labelText: 'Valor taxa financiamento',
-        filled: true,
-        fillColor: const Color.fromARGB(255, 218, 218, 218),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+        labelStyle: const TextStyle(color: Colors.white),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        prefixIcon: const Icon(
+          Icons.percent,
+          color: Colors.white,
         ),
-        prefixIcon: const Icon(Icons.percent),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -160,6 +176,7 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
   DropdownButtonFormField _buildPerformance() {
     return DropdownButtonFormField<String>(
       value: dropdownValue,
+      style: TextStyle(color: Colors.grey[600]),
       items: listPerformance.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -174,13 +191,17 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
       decoration: InputDecoration(
         hintText: 'Selecione o desempenho',
         labelText: 'Desempenho',
-        filled: true,
-        fillColor: const Color.fromARGB(255, 218, 218, 218),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+        labelStyle: const TextStyle(color: Colors.white),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        prefixIcon: const Icon(
+          Icons.dashboard,
+          color: Colors.white,
         ),
-        prefixIcon: const Icon(Icons.dashboard),
       ),
       validator: (value) {
         if (value == null) {
@@ -193,16 +214,18 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
 
   TextFormField _buildDescription() {
     return TextFormField(
+      style: const TextStyle(color: Colors.white60),
       controller: _descriptionController,
       decoration: InputDecoration(
         hintText: 'Escreve uma descrição',
         labelText: 'Descrição',
-        filled: true,
-        fillColor: const Color.fromARGB(255, 218, 218, 218),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
-        ),
+        labelStyle: const TextStyle(color: Colors.white),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
       ),
       keyboardType: TextInputType.multiline,
       maxLines: 2,
@@ -213,9 +236,14 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromRGBO(60, 255, 178, 1)),
         child: const Padding(
           padding: EdgeInsets.all(10.0),
-          child: Text('Cadastrar'),
+          child: Text(
+            'Cadastrar',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
         onPressed: () async {
           final isValid = _formKey.currentState!.validate();
@@ -241,11 +269,17 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
             );
 
             try {
-              await _reportRepository.registryReport(report);
+              if (widget.reportParaEdicao != null) {
+                report.id = widget.reportParaEdicao!.id;
+                await _reportRepository.editReport(report);
+              } else {
+                await _reportRepository.registryReport(report);
+              }
 
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text('Report cadastrado com sucesso'),
+                content: Text('Relatório cadastrado com sucesso'),
               ));
+
               Navigator.of(context).pop(true);
             } catch (e) {
               Navigator.of(context).pop(false);
@@ -258,17 +292,22 @@ class _ReportCadastroPageState extends State<ReportCadastroPage> {
 
   TextFormField _buildDate() {
     return TextFormField(
+      style: const TextStyle(color: Colors.white60),
       controller: _dateController,
       decoration: InputDecoration(
         hintText: 'Informe uma Data',
         labelText: 'Data',
-        filled: true,
-        fillColor: const Color.fromARGB(255, 218, 218, 218),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+        labelStyle: const TextStyle(color: Colors.white),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.white, width: 2)),
+        prefixIcon: const Icon(
+          Icons.calendar_month,
+          color: Colors.white,
         ),
-        prefixIcon: const Icon(Icons.calendar_month),
       ),
       onTap: () async {
         FocusScope.of(context).requestFocus(FocusNode());

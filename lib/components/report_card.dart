@@ -1,15 +1,17 @@
 import 'package:finan_reports/models/report.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:path/path.dart';
 
 class ReportCard extends StatelessWidget {
   final Report report;
-
-  const ReportCard({
-    Key? key,
-    required this.report,
-  }) : super(key: key);
+  final Function() onDelete;
+  final Function() onEdit;
+  ReportCard(
+      {Key? key,
+      required this.report,
+      required this.onDelete,
+      required this.onEdit})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,9 @@ class ReportCard extends StatelessWidget {
           margin:
               const EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
           padding:
-              const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 20),
+              const EdgeInsets.only(left: 30, top: 20, right: 20, bottom: 20),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color.fromRGBO(30, 31, 31, 1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Align(
@@ -32,27 +34,40 @@ class ReportCard extends StatelessWidget {
                   children: [
                     Text(report.title,
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                        )),
-                    const Spacer(),
-                    Text('${report.performance} desempenho',
-                        style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: report.performance == 'Bom'
-                                ? Colors.green
-                                : report.performance == 'Médio'
-                                    ? Colors.orangeAccent
-                                    : Colors.red))
+                            fontSize: 22,
+                            color: Colors.white)),
+                    const Spacer(),
+                    PopupMenuButton(
+                        icon: const Icon(Icons.more_horiz, color: Colors.white),
+                        itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                              PopupMenuItem(
+                                onTap: onDelete,
+                                child: const Text('Excluir'),
+                              ),
+                              PopupMenuItem(
+                                onTap: onEdit,
+                                child: const Text('Editar'),
+                              )
+                            ])
                   ],
                 ),
+                const SizedBox(height: 5),
                 Row(
                   children: [
                     Text(DateFormat('MM/dd/yyyy').format(report.date),
                         style:
                             const TextStyle(fontSize: 16, color: Colors.grey)),
-                    const SizedBox(width: 30),
+                    const SizedBox(width: 10),
+                    Text('${report.performance} desempenho',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: report.performance == 'Bom'
+                                ? const Color.fromRGBO(60, 255, 178, 1)
+                                : report.performance == 'Médio'
+                                    ? Colors.orangeAccent
+                                    : Colors.red[600])),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -65,7 +80,8 @@ class ReportCard extends StatelessWidget {
                             color: Colors.grey)),
                     const SizedBox(width: 10),
                     Text("${report.taxSelic}%",
-                        style: const TextStyle(fontSize: 16)),
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.white)),
                     const SizedBox(width: 30),
                     const Text('financiamento',
                         style: TextStyle(
@@ -74,7 +90,8 @@ class ReportCard extends StatelessWidget {
                             color: Colors.grey)),
                     const SizedBox(width: 10),
                     Text("${report.taxFinan}%",
-                        style: const TextStyle(fontSize: 16)),
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.white)),
                   ],
                 ),
                 const SizedBox(height: 10),
