@@ -101,7 +101,8 @@ class ReportCard extends StatelessWidget {
                     thickness: 2),
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text(report.description.toString()),
+                  child: Text(report.description.toString(),
+                      style: const TextStyle(color: Colors.white)),
                 )
               ],
             ),
